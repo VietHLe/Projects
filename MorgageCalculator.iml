@@ -1,11 +1,64 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" inherit-compiler-output="true">
-    <exclude-output />
-    <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
-    </content>
-    <orderEntry type="inheritedJdk" />
-    <orderEntry type="sourceFolder" forTests="false" />
-  </component>
-</module>
+package com.morgagecalculator;
+
+import jdk.jfr.Percentage;
+
+import java.text.NumberFormat;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        final byte months = 12;
+        final byte percentage = 100;
+        Scanner scan = new Scanner(System.in); //Will ask for terminal input
+        //System.out.print("Principal (1 to 1M): ");
+        int principal = 0;
+
+        while (true){
+            System.out.println("Enter a number from 1 to 1,000,000");
+            System.out.print("Principal (1 to 1M): ");
+             principal = scan.nextInt();
+            if (principal >= 1 && principal <= 1_000_000){
+                break;
+            }
+
+        }
+
+        float annualInterest = 0;
+
+        while (true){
+            System.out.println("Enter a number greater than 0 or equal to 30");
+            System.out.print("Annual Interest: ");
+             annualInterest = scan.nextFloat();
+            if (annualInterest >= 1 && annualInterest <= 30){
+                break;
+            }
+        }
+
+        float monthly_interest_rate = annualInterest/percentage/months;
+        //System.out.println(monthly_interest_rate);
+
+        System.out.print("Period of Years: ");
+        int period = 0;
+
+        while (true){
+            System.out.println("Enter a number of years from 1 to 30");
+            System.out.print("Period of Years: ");
+            period = scan.nextInt();
+            if (period >= 1 && period <= 30){
+                break;
+            }
+        }
+
+        int numberOfPayments = months * period;
+        //System.out.println(numberOfPayments); check to see if multiply pow was correct
+
+        double mortgage = (principal * (monthly_interest_rate * ((Math.pow(1+monthly_interest_rate,numberOfPayments))/((Math.pow(1+monthly_interest_rate,numberOfPayments))-1))));
+        NumberFormat moneyString = NumberFormat.getCurrencyInstance(); // This format from having multiple decimal to 2 decimal and round it
+        System.out.println(moneyString.format(mortgage));
+        //System.out.println((Math.pow(1+monthly_interest_rate,numberOfPayments))); // check to see if equation was correct
+    }
+
+
+
+}
